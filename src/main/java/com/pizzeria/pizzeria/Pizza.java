@@ -1,5 +1,7 @@
 package com.pizzeria.pizzeria;
 
+import java.text.DecimalFormat;
+
 public class Pizza {
 
 	//attributs de la classe
@@ -64,7 +66,8 @@ public class Pizza {
 	
 	@Override
 	public String toString() {
-		return "id: " + id + "\ncode: " + code + "\ndesignation: " + designation + "\nprix : " + prix + " €";
+		//return "id: " + id + "\ncode: " + code + "\ndesignation: " + designation + "\nprix : " + prix + " €";
+		return code+"->"+designation+"("+prix+")" ; 
 	}
 
 	
