@@ -1,10 +1,14 @@
 package com.pizzeria.pizzeria;
 
+import java.util.List;
+
 public interface IPizzaDao {
 
-	public Pizza[] findAllPizzas();
-	public void updatePizza(String codePizza, Pizza pizza);
-	public Pizza findPizzaByCode(String codePizza);
-	public boolean isPizzaExists(String codePizza);
+	 List<Pizza> findAllPizzas();
+	 void saveNewPizza(Pizza pizza);
+	 void updatePizza(String codePizza, Pizza pizza);
+	 void deletePizza(String codePizza);
+	 Pizza findPizzaByCode(String codePizza);
+	 boolean isPizzaExists(String codePizza);
 	
 }

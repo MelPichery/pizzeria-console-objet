@@ -1,5 +1,6 @@
 package com.pizzeria.pizzeria;
 
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Pizzeria {
@@ -14,7 +15,7 @@ public class Pizzeria {
 		String pizzaModif ="";
 		String nouveauCode = "";
 		String nouveauNom = "";
-		String pizzaATester = "";
+		String pizzaASupprimer = "";
 		Double nouveauPrix = 0.0;
 		Scanner sc = new Scanner(System.in);
 		Scanner sc1 = new Scanner(System.in);
@@ -31,7 +32,7 @@ public class Pizzeria {
 		while (continuer) {
 			
 			System.out.println("***** Pizzeria Administration *****\n1.\tListe des pizzas\n2.\tAjouter une pizza\n"
-					+ "3.\tMettre à jour une pizza\n4.\tPizza existe ?\n99.\tSortir");
+					+ "3.\tMettre à jour une pizza\n4.\tSupprimer une pizza ?\n5.\tTrier par prix croissant\n6.\tTrier par code décroissant\n99.\tSortir");
 			
 			//affichage et sauvegarde de l'option donnée par l'utilisateur
 			System.out.println("\nVeuillez faire un choix");
@@ -39,11 +40,8 @@ public class Pizzeria {
 			
 			if (option == 1) {
 				
-				for (Pizza p : piz.findAllPizzas()) {
-					
-					System.out.println(p.toString());
-					
-				}					
+				System.out.println(piz.findAllPizzas());
+		
 			}
 			
 			if (option == 2) {
@@ -59,7 +57,9 @@ public class Pizzeria {
 				System.out.println("Veuillez saisir le prix");
 				prix = sc8.nextDouble();
 				
-				piz.addPizza(codePizza, nom, prix);
+				Pizza pizza = new Pizza(codePizza,nom,prix);
+				
+				piz.saveNewPizza(pizza);
 			}
 			
 			if (option == 3) {
@@ -87,22 +87,32 @@ public class Pizzeria {
 					System.out.println("Pas de pizza pour ce code");
 					
 				}
-				
-				
-				
+								
 			}
 			
 			if (option == 4) {
 				
-				System.out.println("Veuillez choisir le code de la pizza à tester");
-				pizzaATester = sc6.nextLine();
+				System.out.println("Veuillez choisir le code de la pizza à supprimer");
+				pizzaASupprimer = sc6.nextLine();
 				
-				System.out.println(piz.isPizzaExists(pizzaATester));
+				piz.deletePizza(pizzaASupprimer);
 				
 			}
 			
-			if (option == 99) {
+			if (option == 5) {
+								
+				Collections.sort(piz.findAllPizzas(),new ComparatorPrix());
+				System.out.println(piz.findAllPizzas());
+			}
+			
+			if (option == 6) {
 				
+				Collections.sort(piz.findAllPizzas(), new ComparatorCode());
+				System.out.println(piz.findAllPizzas());
+			}
+			
+			if (option == 99) {
+
 				System.out.println("Au revoir");
 				
 				//fermeture des scanners

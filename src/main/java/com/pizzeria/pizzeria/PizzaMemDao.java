@@ -1,56 +1,28 @@
 package com.pizzeria.pizzeria;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PizzaMemDao implements IPizzaDao {
 	
-	Pizza[] pizzas =  new Pizza[8];
+	List<Pizza> pizzas =  new ArrayList<Pizza>();
 	
-	{ 			
-		pizzas[0] = new Pizza("PEP","Pépéroni", 12.50);
-		pizzas[1] = new Pizza("MAR","Margherita",14.00);
-		pizzas[2] = new Pizza("REIN","La Reine",11.50);
-		pizzas[3] = new Pizza("FRO","La 4 Fromages",12.00);
-		pizzas[4] = new Pizza("CAN","Cannibale",12.50);
-		pizzas[5] = new Pizza("SAV","Savoyarde",13.00);
-		pizzas[6] = new Pizza("ORI","L'orientale",13.50);
-		pizzas[7] = new Pizza("IND","L'indienne",14.00);
+	{ 	
+		pizzas.add(new Pizza("PEP","Pépéroni", 12.50));
+		pizzas.add(new Pizza("MAR","Margherita",14.00));
+		pizzas.add(new Pizza("REIN","La Reine",11.50));
+		pizzas.add(new Pizza("FRO","La 4 Fromages",12.00));
+		pizzas.add(new Pizza("CAN","Cannibale",12.50));
+		pizzas.add(new Pizza("SAV","Savoyarde",13.00));
+		pizzas.add(new Pizza("ORI","L'orientale",13.50));
+		pizzas.add(new Pizza("IND","L'indienne",14.00));
+
 	}
 
-	@Override
-	public Pizza[] findAllPizzas() {
-		
-		return pizzas ;
-		
-	}
-
-	public void addPizza(String codePizza, String nom, double prix) {
-		
-		Pizza pizza = new Pizza(codePizza,nom, prix);
-		
-		//création d'un tableau temporaire avec un taille incrémenté de 1 du tableau pizza
-		Pizza[] pizzasTemp = new Pizza[pizzas.length+1];
-		
-		//boucle pour donner les valeurs du tableau pizzas au tableau temporaire pizzasTemp
-		for (int i = 0; i < pizzasTemp.length-1; i++) {
-			pizzasTemp[i] = pizzas[i];
-		}
-		
-		//redimension du tableau pizzas à la taille du tableau pizzasTemp
-		pizzas = new Pizza[pizzasTemp.length];
-		
-		//réaffectation des valeurs de pizzasTemp à pizzas
-		for (int i = 0; i < pizzas.length; i++) {
-			pizzas[i] = pizzasTemp[i];
-		}
-		
-		//au dernier index du tableau prend la valeur du nouvel objet pizza
-		pizzas[pizzas.length - 1] = pizza ;	
-		
-	}
 
 	@Override
 	public void updatePizza(String codePizza, Pizza pizza) {
+		
 		
 		if (isPizzaExists(codePizza)) {
 			
@@ -105,7 +77,36 @@ public class PizzaMemDao implements IPizzaDao {
 		
 		return result;
 	}
+
+	@Override
+	public List<Pizza> findAllPizzas() {
+		
+		return pizzas;
+	}
+
+	@Override
+	public void saveNewPizza(Pizza pizza) {
 	
+		pizzas.add(pizza);
+		
+	}
+
+	@Override
+	public void deletePizza(String codePizza) {
 	
-	
+		if (isPizzaExists(codePizza)) {
+			
+			Pizza pizza = findPizzaByCode(codePizza);
+			
+			pizzas.remove(pizza);
+			
+		}else {
+			
+			System.out.println("Pas de pizza pour ce code");
+			
+		}
+		
+		
+	}
+			
 }

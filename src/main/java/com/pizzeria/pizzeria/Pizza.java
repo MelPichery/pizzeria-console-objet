@@ -1,6 +1,6 @@
 package com.pizzeria.pizzeria;
 
-import java.text.DecimalFormat;
+
 
 public class Pizza {
 
@@ -8,7 +8,7 @@ public class Pizza {
 	private int id;
 	private String code;
 	private String designation;
-	private double prix;
+	private Double prix;
 	
 	
 	public static int compteur = 0;
@@ -20,7 +20,7 @@ public class Pizza {
 	 * @param designation nom pizza
 	 * @param prix prix de la pizza à l'unité
 	 */
-	public Pizza(String code, String designation, double prix) {
+	public Pizza(String code, String designation, Double prix) {
 		
 		this.id = ++compteur;
 		this.code = code;
@@ -54,12 +54,12 @@ public class Pizza {
 	}
 
 	
-	public double getPrix() {
+	public Double getPrix() {
 		return prix;
 	}
 
 	
-	public void setPrix(double prix) {
+	public void setPrix(Double prix) {
 		this.prix = prix;
 	}
 	
@@ -67,7 +67,7 @@ public class Pizza {
 	@Override
 	public String toString() {
 		//return "id: " + id + "\ncode: " + code + "\ndesignation: " + designation + "\nprix : " + prix + " €";
-		return code+"->"+designation+"("+prix+")" ; 
+		return code+"->"+designation+"("+prix+")\n" ; 
 	}
 
 	
