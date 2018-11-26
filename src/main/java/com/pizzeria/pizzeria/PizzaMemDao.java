@@ -3,6 +3,10 @@ package com.pizzeria.pizzeria;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.pizzeria.exception.DeletePizzaException;
+import com.pizzeria.exception.SavePizzaException;
+import com.pizzeria.exception.UpDatePizzaException;
+
 public class PizzaMemDao implements IPizzaDao {
 	
 	List<Pizza> pizzas =  new ArrayList<Pizza>();
@@ -21,7 +25,7 @@ public class PizzaMemDao implements IPizzaDao {
 
 
 	@Override
-	public void updatePizza(String codePizza, Pizza pizza) {
+	public void updatePizza(String codePizza, Pizza pizza) throws UpDatePizzaException {
 		
 		
 		if (isPizzaExists(codePizza)) {
@@ -36,7 +40,7 @@ public class PizzaMemDao implements IPizzaDao {
 			
 		}else {
 			
-			System.out.println("Pas de pizza pour ce code");
+			throw new UpDatePizzaException("Pas de pizza pour ce code");
 			
 		}
 		
@@ -85,14 +89,28 @@ public class PizzaMemDao implements IPizzaDao {
 	}
 
 	@Override
-	public void saveNewPizza(Pizza pizza) {
-	
-		pizzas.add(pizza);
+	public void saveNewPizza(Pizza pizza) throws SavePizzaException {
+
+		if (pizza.getCode().length()<4) {
+			if (pizza.getDesignation().length()>4) {			
+				if (pizza.getPrix()>8) {
+					pizzas.add(pizza);
+				}else {
+					throw new SavePizzaException("le prix doit être supérieur à 8");
+				}
+			}else {
+				throw new SavePizzaException("désignation inferieur a 3 caractères");
+			}
+			
+		}else {
+			throw new SavePizzaException("code supérieur a 3 caractères");
+		}
 		
+										
 	}
 
 	@Override
-	public void deletePizza(String codePizza) {
+	public void deletePizza(String codePizza) throws DeletePizzaException{
 	
 		if (isPizzaExists(codePizza)) {
 			
@@ -102,8 +120,8 @@ public class PizzaMemDao implements IPizzaDao {
 			
 		}else {
 			
-			System.out.println("Pas de pizza pour ce code");
-			
+			throw new DeletePizzaException("Pas de pizza pour ce code ");
+						
 		}
 		
 		

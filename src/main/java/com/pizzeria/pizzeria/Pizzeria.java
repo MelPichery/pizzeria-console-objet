@@ -3,6 +3,7 @@ package com.pizzeria.pizzeria;
 import java.util.Collections;
 import java.util.Scanner;
 
+
 public class Pizzeria {
 
 	public static void main(String[] args) {
@@ -29,8 +30,12 @@ public class Pizzeria {
 		
 		PizzaMemDao piz = new PizzaMemDao();
 		
+			
+		
 		while (continuer) {
 			
+			try {
+				
 			System.out.println("***** Pizzeria Administration *****\n1.\tListe des pizzas\n2.\tAjouter une pizza\n"
 					+ "3.\tMettre à jour une pizza\n4.\tSupprimer une pizza ?\n5.\tTrier par prix croissant\n6.\tTrier par code décroissant\n99.\tSortir");
 			
@@ -48,8 +53,9 @@ public class Pizzeria {
 				
 				System.out.println("Ajouter une pizza");
 				
-				System.out.println("\nVeuillez entrer le code");
+				System.out.println("\nVeuillez entrer le code");				
 				codePizza = sc5.nextLine();
+				
 				
 				System.out.println("Veuillez saisir le nom (sans espace)");
 				nom = sc7.nextLine();
@@ -59,15 +65,16 @@ public class Pizzeria {
 				
 				Pizza pizza = new Pizza(codePizza,nom,prix);
 				
+				
 				piz.saveNewPizza(pizza);
+				
 			}
 			
 			if (option == 3) {
 				
 				System.out.println("Veuillez choisir le code de la pizza à modifier");
 				pizzaModif = sc1.nextLine();
-				
-				if (piz.isPizzaExists(pizzaModif)) {
+							
 					
 					System.out.println("Veuillez saisir le code");
 					nouveauCode = sc2.nextLine();
@@ -82,12 +89,7 @@ public class Pizzeria {
 					
 					piz.updatePizza(pizzaModif, newPizza);
 					
-				}else {
-					
-					System.out.println("Pas de pizza pour ce code");
-					
-				}
-								
+												
 			}
 			
 			if (option == 4) {
@@ -129,8 +131,13 @@ public class Pizzeria {
 				continuer = false ;
 				
 			}
-			
+			} catch (Exception e) {
+				
+				System.out.println(e.getMessage());
+				
+			}
 		}
+		
 		
 		
 		
