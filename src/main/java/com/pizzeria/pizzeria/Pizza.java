@@ -1,6 +1,6 @@
 package com.pizzeria.pizzeria;
 
-
+import com.pizzeria.exception.StockageException;
 
 public class Pizza {
 
@@ -9,6 +9,11 @@ public class Pizza {
 	private String code;
 	private String designation;
 	private Double prix;
+	
+	private final int LONGUEUR_CODE = 3;
+	private final int PRIX_MAX = 15;
+	private final int PRIX_MIN = 4;
+	
 	
 	
 	public static int compteur = 0;
@@ -61,6 +66,27 @@ public class Pizza {
 	
 	public void setPrix(Double prix) {
 		this.prix = prix;
+	}
+	
+	
+	public void dataControl() throws StockageException {
+		
+		if(code.length() != LONGUEUR_CODE || code.trim().length() == 0) {
+			throw new StockageException("Pizza : Code pizza est vide ou ne contient pas 3 caractères");
+		}
+		
+		else if (prix < PRIX_MIN || prix > PRIX_MAX) {
+			
+			throw new StockageException("Pizza : Le prix est trop bas ou trop élevé");			
+			
+		}
+		
+		else if(designation.trim().length() == 0) {
+			
+			throw new StockageException("Pizza : La désignation est vide");
+			
+		}
+		
 	}
 	
 	

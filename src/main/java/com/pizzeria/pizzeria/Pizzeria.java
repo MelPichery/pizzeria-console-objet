@@ -64,8 +64,7 @@ public class Pizzeria {
 				prix = sc8.nextDouble();
 				
 				Pizza pizza = new Pizza(codePizza,nom,prix);
-				
-				
+								
 				piz.saveNewPizza(pizza);
 				
 			}
@@ -86,7 +85,7 @@ public class Pizzeria {
 					nouveauPrix = sc4.nextDouble();
 
 					Pizza newPizza = new Pizza(nouveauCode,nouveauNom,nouveauPrix);
-					
+										
 					piz.updatePizza(pizzaModif, newPizza);
 					
 												

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.pizzeria.exception.DeletePizzaException;
 import com.pizzeria.exception.SavePizzaException;
+import com.pizzeria.exception.StockageException;
 import com.pizzeria.exception.UpDatePizzaException;
 
 public class PizzaMemDao implements IPizzaDao {
@@ -31,13 +32,29 @@ public class PizzaMemDao implements IPizzaDao {
 		if (isPizzaExists(codePizza)) {
 			
 			Pizza pizzaModif = findPizzaByCode(codePizza);
+			Boolean ok = false;
+				
+			try {
+				
+					pizza.dataControl();
+					ok = true;
+					
+			} catch (StockageException e) {
+				
+					System.out.println(e.getMessage());
+					
+			}
 			
-			pizzaModif.setCode(pizza.getCode());
-			
-			pizzaModif.setDesignation(pizza.getDesignation());
-			
-			pizzaModif.setPrix(pizza.getPrix());
-			
+			if (ok) {
+					
+					pizzaModif.setCode(pizza.getCode());
+					
+					pizzaModif.setDesignation(pizza.getDesignation());
+					
+					pizzaModif.setPrix(pizza.getPrix());
+			}
+				
+											
 		}else {
 			
 			throw new UpDatePizzaException("Pas de pizza pour ce code");
@@ -89,24 +106,19 @@ public class PizzaMemDao implements IPizzaDao {
 	}
 
 	@Override
-	public void saveNewPizza(Pizza pizza) throws SavePizzaException {
+	public void saveNewPizza(Pizza pizza) {
 
-		if (pizza.getCode().length()<4) {
-			if (pizza.getDesignation().length()>4) {			
-				if (pizza.getPrix()>8) {
+				try {
+					
+					pizza.dataControl();
 					pizzas.add(pizza);
-				}else {
-					throw new SavePizzaException("le prix doit être supérieur à 8");
+					
+				} catch (StockageException e) {
+					
+					System.out.println(e.getMessage());
 				}
-			}else {
-				throw new SavePizzaException("désignation inferieur a 3 caractères");
-			}
-			
-		}else {
-			throw new SavePizzaException("code supérieur a 3 caractères");
-		}
-		
-										
+					
+																			
 	}
 
 	@Override
