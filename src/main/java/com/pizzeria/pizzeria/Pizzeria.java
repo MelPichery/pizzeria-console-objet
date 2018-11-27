@@ -3,6 +3,8 @@ package com.pizzeria.pizzeria;
 import java.util.Collections;
 import java.util.Scanner;
 
+import com.pizerria.model.CategoriePizzaEnum;
+
 
 public class Pizzeria {
 
@@ -17,6 +19,8 @@ public class Pizzeria {
 		String nouveauCode = "";
 		String nouveauNom = "";
 		String pizzaASupprimer = "";
+		String categorie ;
+		String nouvelleCategorie;
 		Double nouveauPrix = 0.0;
 		Scanner sc = new Scanner(System.in);
 		Scanner sc1 = new Scanner(System.in);
@@ -27,6 +31,8 @@ public class Pizzeria {
 		Scanner sc6 = new Scanner(System.in);
 		Scanner sc7 = new Scanner(System.in);
 		Scanner sc8 = new Scanner(System.in);
+		Scanner sc9 = new Scanner(System.in);
+		Scanner sc10 = new Scanner(System.in);
 		
 		PizzaMemDao piz = new PizzaMemDao();
 		
@@ -63,9 +69,24 @@ public class Pizzeria {
 				System.out.println("Veuillez saisir le prix");
 				prix = sc8.nextDouble();
 				
-				Pizza pizza = new Pizza(codePizza,nom,prix);
-								
-				piz.saveNewPizza(pizza);
+				System.out.println("Veuillez saisir la catégorie(Viande/Fromage/Poisson/Autre)");
+				categorie = sc9.nextLine();
+				
+				categorie= categorie.toUpperCase();
+				
+				try
+				{
+					CategoriePizzaEnum categorieEnum = CategoriePizzaEnum.valueOf(categorie);
+					Pizza pizza = new Pizza(codePizza,nom,prix,categorieEnum);
+					
+					piz.saveNewPizza(pizza);
+				}
+				catch (Exception e)
+				{
+					System.out.println("Erreur dans la saisie de la catégorie");
+				}
+				
+				
 				
 			}
 			
@@ -83,10 +104,24 @@ public class Pizzeria {
 					
 					System.out.println("Veuillez saisir le prix");
 					nouveauPrix = sc4.nextDouble();
+					
+					System.out.println("Veuillez saisir la catégorie(Viande/Fromage/Poisson/Autre)");
+					nouvelleCategorie = sc10.nextLine();
+					
+					nouvelleCategorie = nouvelleCategorie.toUpperCase();
 
-					Pizza newPizza = new Pizza(nouveauCode,nouveauNom,nouveauPrix);
-										
-					piz.updatePizza(pizzaModif, newPizza);
+					
+					try
+					{
+						CategoriePizzaEnum categorieEnum = CategoriePizzaEnum.valueOf(nouvelleCategorie);
+						Pizza newPizza = new Pizza(nouveauCode,nouveauNom,nouveauPrix,categorieEnum);
+						
+						piz.updatePizza(pizzaModif, newPizza);
+					}
+					catch (Exception e)
+					{
+						System.out.println("Erreur dans la saisie de la catégorie");
+					}
 					
 												
 			}
@@ -126,6 +161,8 @@ public class Pizzeria {
 				sc6.close();
 				sc7.close();
 				sc8.close();
+				sc9.close();
+				sc10.close();
 				//Pour sortir de la boucle, continuer passe à faux
 				continuer = false ;
 				
